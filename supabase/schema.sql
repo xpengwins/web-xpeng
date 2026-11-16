@@ -6,7 +6,6 @@ create table if not exists public.leads (
   name text not null,
   phone text not null,
   variant text not null,
-  color text,
   note text,
   status text not null default 'new'
 );

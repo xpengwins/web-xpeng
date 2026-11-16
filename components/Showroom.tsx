@@ -1,6 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import { COLORS, VARIANTS, rp, waLink, type ColorKey } from "@/data/variants";
+import Link from "next/link";
+import { COLORS, VARIANTS, MODELS, rp, type ColorKey } from "@/data/variants";
+import { contactHref, contactExternal } from "@/lib/dealer";
 import CarView from "./CarView";
 import Cursor from "./Cursor";
 
@@ -103,6 +105,7 @@ export default function Showroom() {
 
   const v = VARIANTS[cur];
   const ck = colors[cur];
+  const ext = contactExternal ? { target: "_blank", rel: "noopener" } : {};
 
   return (
     <>
@@ -111,13 +114,13 @@ export default function Showroom() {
         <div ref={stage} data-stage className={"stage" + (mode === "lineup" ? " lineup" : "")}
           onPointerDown={(e) => { if (!(e.target as HTMLElement).closest("button,a,[data-hot]")) swipe.current = e.clientX; }}
           onPointerUp={(e) => { if (swipe.current === null) return; const dx = e.clientX - swipe.current; swipe.current = null; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1)); }}>
-          <div className="meta">Model 2026 · G6 &amp; X9 · Indonesia</div>
+          <div className="meta">Dealer XPENG · G6 · X9 · G9L · Harga OTR Jakarta</div>
           <div className="toggle">
             <button className={mode === "line" ? "on" : ""} onClick={() => setMode("line")}>Line</button>
             <button className={mode === "lineup" ? "on" : ""} onClick={() => setMode("lineup")}>Line-up</button>
           </div>
           <div className="copy"><h1>XPENG<br />Lineup</h1>
-            <p>Dua model, lima varian, satu antrean. Geser barisannya — yang paling depan sedang dilayani.</p></div>
+            <p>{VARIANTS.length} varian, satu antrean. Geser barisannya — yang paling depan sedang dilayani. Ilustrasi mobil; foto unit asli menyusul.</p></div>
           <svg className="floor" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden>
             <path d={`M-20 ${560 - cur * 8} C 250 ${470 + cur * 10}, 520 ${640 - cur * 12}, 1020 ${700 - cur * 16}`}
               fill="none" stroke="#f5e91a" strokeWidth={22} strokeLinecap="round" style={{ transition: "d .8s" }} />
@@ -142,15 +145,15 @@ export default function Showroom() {
           <div className="card"><div className="top"><span>{pad(cur + 1)} · 01/03</span><span>Harga OTR Jakarta</span></div>
             <div className="mid"><div className="big-n">{rp(v.priceJt)}</div></div>
             <div className="row"><div><div className="nm">{v.name}</div><div className="pr">{v.tag}</div></div>
-              <a className="add" target="_blank" rel="noopener" href={waLink("Halo, saya tertarik booking XPENG " + v.name)}>BOOKING</a></div></div>
+              <a className="add" {...ext} href={contactHref("Halo, saya tertarik booking XPENG " + v.name)}>BOOKING</a></div></div>
           <div className="card" style={{ animationDelay: ".07s" }}><div className="top"><span>{pad(cur + 1)} · 02/03</span><span>Jarak tempuh</span></div>
             <div className="mid"><div className="big-n">{v.range}<small>{v.rangeUnit}</small></div></div>
-            <div className="row"><div><div className="nm">{v.model === "G6" ? "SUV Coupe" : "MPV Premium"}</div><div className="pr">{v.spec[0][0]}: {v.spec[0][1]}</div></div>
-              <a className="add" href="#detail">SPEK</a></div></div>
+            <div className="row"><div><div className="nm">{v.tag}</div><div className="pr">{v.spec[0][0]}: {v.spec[0][1]}</div></div>
+              <Link className="add" href={`/model/${v.model.toLowerCase()}`}>SPEK</Link></div></div>
           <div className="card" style={{ animationDelay: ".14s" }}><div className="top"><span>{pad(cur + 1)} · 03/03</span><span>Pilih warna</span></div>
             <div className="mid"><Swatches colors={v.colors} active={ck} onPick={(k) => setColor(cur, k)} /></div>
             <div className="row"><div><div className="nm">{COLORS[ck].name}</div><div className="pr">Klik warna → mobil berganti</div></div>
-              <a className="add" target="_blank" rel="noopener" href={waLink("Halo, saya mau test drive XPENG " + v.name)}>TEST DRIVE</a></div></div>
+              <Link className="add" href="/test-drive">TEST DRIVE</Link></div></div>
         </aside>
       </section>
 
@@ -160,7 +163,7 @@ export default function Showroom() {
           <div className="bigcar" key={cur}><CarView variant={v} color={ck} /></div>
           <div className="cname"><span className="nb">WARNA</span><b>{COLORS[ck].name}</b></div>
           <Swatches colors={v.colors} active={ck} onPick={(k) => setColor(cur, k)} />
-          <div className="na">{v.slug === "x9-long-range-pro-plus" ? "Polar Violet khusus varian tertinggi." : "Pilihan warna dapat berbeda sesuai periode & stok."}</div>
+          <div className="na">Ilustrasi — warna dapat berbeda dengan unit asli. Pilihan warna sesuai brosur; stok dikonfirmasi sales.</div>
         </div>
         <div className="dr">
           <div><div className="lab" style={{ marginBottom: 10 }}>Pilih varian</div>
@@ -169,10 +172,11 @@ export default function Showroom() {
           <div className="price">{rp(v.priceJt)}<small>Harga on the road Jakarta</small></div>
           <div className="specs">{v.spec.map(([a, b]) => <div key={a}><span>{a}</span><b>{b}</b></div>)}</div>
           <div className="ctas">
-            <a className="tk" target="_blank" rel="noopener" href={waLink(`Halo, saya tertarik XPENG ${v.name} warna ${COLORS[ck].name}`)}>Booking via WhatsApp →</a>
-            <a className="tk blk" href="#daftar">Test drive <b>→</b></a>
+            <a className="tk" {...ext} href={contactHref(`Halo, saya tertarik XPENG ${v.name} warna ${COLORS[ck].name}`)}>{contactExternal ? "Booking via WhatsApp →" : "Booking →"}</a>
+            <Link className="tk blk" href="/test-drive">Test drive <b>→</b></Link>
+            <Link className="tk blk" href={`/model/${v.model.toLowerCase()}`}>Halaman {v.model} <b>→</b></Link>
           </div>
-          <div className="disc">Harga OTR Jakarta berdasarkan pemberitaan peluncuran Juni 2026 dan daftar harga September 2026; dapat berubah sewaktu-waktu. Warna &amp; ketersediaan per varian bisa berbeda — konfirmasi ke sales sebelum memesan.</div>
+          <div className="disc">Harga OTR Jakarta menurut materi APM XPENG Indonesia, November 2026; dapat berubah sewaktu-waktu. Spesifikasi menurut brosur resmi; konfirmasi ke sales sebelum memesan.</div>
         </div>
       </section>
     </>

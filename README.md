@@ -1,24 +1,17 @@
-# XPENG Wins — Next.js
+# XPENG Dealer Website (Next.js 16)
 
-Next.js (App Router) + React + TypeScript + Tailwind v4.
+Situs dealer XPENG (G6, X9, G9L, L03) berbasis SEO/AEO/GEO + anti-blokir. Domain baru, BUKAN xpengwins.com.
 
 ## Struktur
-- `data/variants.ts` — **semua data varian, harga, warna, spesifikasi** (edit di sini; nanti bisa dipindah ke Supabase)
-- `components/Showroom.tsx` — hero "The Line" + detail dengan ganti warna
-- `components/CreditCalc.tsx` — simulasi cicilan · `components/LeadForm.tsx` — form test drive/booking
-- `app/api/leads/route.ts` — API simpan lead (Supabase kalau env diisi, kalau tidak hanya log)
-- `app/model/[slug]` — halaman per model (G6, X9), static untuk SEO
-- `supabase/schema.sql` — tabel `leads`
-- `public/cars/` — taruh foto asli mobil, lalu daftarkan di `PHOTOS` (data/variants.ts)
+- `data/variants.ts` — semua data produk (harga bertanggal, spesifikasi brosur, FAQ). Ubah di sini, semua halaman ikut.
+- `data/credit.ts` — tabel paket leasing (Bunga 0%, Reguler, IMFI).
+- `data/dealer.json` — identitas dealer (WAJIB diisi sebelum live).
+- `lib/site.ts` — domain (NEXT_PUBLIC_SITE_URL), bulan harga, tanggal pembaruan.
+- `app/` — halaman: `/`, `/harga-xpeng`, `/model/[g6|x9|g9l|l03]`, `/simulasi-kredit`, `/test-drive`, `/dealer`, `/tentang`, `/kebijakan-privasi`, sitemap, robots, API lead.
+- `scripts/monitor.mjs` — monitoring harian; `docs/CHECKLIST-LAUNCH.md` — checklist peluncuran.
 
-## Deploy (tanpa install apa pun di HP)
-1. Import repo ini di **Vercel** atau **Cloudflare Pages** → framework Next.js → Deploy.
-2. Isi Environment Variables seperti `.env.example` (terutama `NEXT_PUBLIC_WA_NUMBER`).
-3. (Opsional) Buat project Supabase → jalankan `supabase/schema.sql` → isi `SUPABASE_URL` & `SUPABASE_SERVICE_ROLE_KEY`.
+## Menjalankan
+npm install → npm run dev. Build: npm run build (gagal otomatis bila domain live tetapi dealer.json kosong).
 
-## Jalankan lokal (komputer)
-```
-npm install
-npm run dev
-```
-> Harga, warna & spesifikasi di `data/variants.ts` diambil dari pemberitaan — cocokkan dengan katalog resmi XPENG Indonesia sebelum tayang.
+## Perilaku domain
+Selama NEXT_PUBLIC_SITE_URL kosong / vercel.app / pages.dev, situs `noindex` dan robots memblokir semua. Setelah domain asli diisi, indeks otomatis aktif.

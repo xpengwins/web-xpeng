@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prebuild": "node scripts/check-live.mjs",
+    "monitor": "node scripts/monitor.mjs"
   },
   "dependencies": {
     "next": "^16.4.6",
