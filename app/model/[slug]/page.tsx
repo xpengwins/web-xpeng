@@ -6,6 +6,7 @@ import { Answer, DealerNote, Faqs, Meta, PageHead, Section, SpecTable } from "@/
 import CarView from "@/components/CarView";
 import JsonLd from "@/components/JsonLd";
 import { breadcrumb, carSchema, faqSchema } from "@/lib/schema";
+import { COMPARES } from "@/data/compare";
 import { PACKAGES } from "@/data/credit";
 import { contactHref, contactExternal } from "@/lib/dealer";
 
@@ -65,7 +66,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
             <a className="tk blk !h-10" href={contactHref(`Halo, saya tertarik XPENG ${m.name}`)} {...(contactExternal ? { target: "_blank", rel: "noopener" } : {})}>Tanya sales <b>→</b></a></div></section>
         <Faqs faq={m.faq} />
         <section><h2 className="sec-h !text-3xl">Lihat juga</h2><ul className="mt-3 flex flex-wrap gap-3">
-          {[...COMPARE[m.slug], { href: "/harga-xpeng", label: "Daftar harga semua model" }, { href: "/dealer", label: "Dealer & kontak" }].map((l) => <li key={l.href}><Link href={l.href} className="underline underline-offset-4">{l.label}</Link></li>)}</ul></section>
+          {[...COMPARE[m.slug], ...COMPARES.filter((c) => c.a === m.name || c.b === m.name).map((c) => ({ href: `/bandingkan/${c.slug}`, label: c.h1 })), { href: "/harga-xpeng", label: "Daftar harga semua model" }, { href: "/panduan/garansi-baterai-xpeng", label: "Garansi baterai & servis" }, { href: "/panduan/biaya-charge-xpeng-rumah-vs-spklu", label: "Biaya charge rumah vs SPKLU" }, { href: "/dealer", label: "Dealer & kontak" }].map((l) => <li key={l.href}><Link href={l.href} className="underline underline-offset-4">{l.label}</Link></li>)}</ul></section>
         <DealerNote />
       </Section>
       <JsonLd data={[breadcrumb([{ name: "Beranda", path: "/" }, { name: `XPENG ${m.name}`, path }]), faqSchema(m.faq), ...vs.map((v) => carSchema(v, path))]} />

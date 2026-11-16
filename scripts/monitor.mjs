@@ -10,7 +10,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const SITE = (process.env.SITE_URL || "").replace(/\/$/, "");
 if (!SITE) { console.error("SITE_URL wajib diisi"); process.exit(2); }
-const PATHS = ["/", "/harga-xpeng", "/simulasi-kredit", "/test-drive", "/dealer", "/tentang", "/model/g6", "/model/x9", "/model/g9l", "/model/l03"];
+const PATHS = ["/", "/harga-xpeng", "/simulasi-kredit", "/test-drive", "/dealer", "/tentang", "/model/g6", "/model/x9", "/model/g9l", "/model/l03", "/bandingkan/g6-vs-x9", "/bandingkan/x9-vs-g9l", "/bandingkan/g6-vs-g9l", "/panduan", "/panduan/garansi-baterai-xpeng", "/panduan/waktu-charge-xpeng-di-rumah"];
 const REQUIRED = ["XPENG"];
 const SPAM = /(slot gacor|judi online|togel|viagra|casino|pharmacy|poker online|situs slot)/i;
 const FILE = ".monitor-hashes.json";

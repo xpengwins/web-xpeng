@@ -109,7 +109,7 @@ export type Model = {
   answer: string; whoFor: string[]; diff: string; faq: Faq[];
 };
 
-const BATT = "Materi peluncuran XPENG Indonesia menyebut garansi baterai 8 tahun; syarat dan ketentuan berlaku, konfirmasi ke sales.";
+const BATT = "Menurut pemberitaan peluncuran XPENG Indonesia: garansi kendaraan, baterai tegangan tinggi, BMS, dan motor listrik 8 tahun/160.000 km, gratis servis 5 tahun/100.000 km, dengan syarat servis berkala tiap 12 bulan/20.000 km. Konfirmasi syarat terbaru ke sales.";
 
 export const MODELS: Model[] = [
   {

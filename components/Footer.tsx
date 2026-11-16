@@ -20,7 +20,7 @@ export default function Footer() {
           <ul>{MODELS.map((m) => <li key={m.slug}><Link href={`/model/${m.slug}`}>XPENG {m.name}</Link></li>)}
             <li><Link href="/harga-xpeng">Daftar harga</Link></li></ul></div>
         <div><b className="text-[#f5e91a]">Layanan</b>
-          <ul><li><Link href="/simulasi-kredit">Simulasi kredit</Link></li><li><Link href="/test-drive">Test drive</Link></li>
+          <ul><li><Link href="/simulasi-kredit">Simulasi kredit</Link></li><li><Link href="/test-drive">Test drive</Link></li><li><Link href="/panduan">Panduan</Link></li>
             <li><Link href="/dealer">Dealer & kontak</Link></li><li><Link href="/tentang">Tentang</Link></li><li><Link href="/kebijakan-privasi">Kebijakan privasi</Link></li></ul>
           {social.length ? <ul className="mt-2">{social.map(([n, u]) => <li key={n}><a href={u} rel="noopener me" target="_blank">{n}</a></li>)}</ul> : null}</div>
       </div>
