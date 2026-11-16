@@ -18,7 +18,6 @@ export function dealerSchema() {
     "@id": abs("/#dealer"), name: DEALER.displayName || SITE_NAME, legalName: DEALER.legalName, url: abs("/"),
     ...(hasWhatsApp ? { telephone: DEALER.phone || waDisplay } : DEALER.phone ? { telephone: DEALER.phone } : {}),
     ...(DEALER.email ? { email: DEALER.email } : {}),
-    ...(DEALER.openingHours ? { openingHours: DEALER.openingHours } : {}),
     address: { "@type": "PostalAddress", streetAddress: DEALER.addressLine, addressLocality: DEALER.city,
       ...(DEALER.province ? { addressRegion: DEALER.province } : {}), ...(DEALER.postalCode ? { postalCode: DEALER.postalCode } : {}), addressCountry: "ID" },
     brand: { "@type": "Brand", name: "XPENG" },

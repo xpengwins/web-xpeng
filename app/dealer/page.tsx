@@ -13,7 +13,7 @@ export default function Page() {
   const rows: [string, string][] = ([
     ["Nama dealer", DEALER.displayName], ["Badan usaha", DEALER.legalName],
     ["Alamat", [DEALER.addressLine, DEALER.district, DEALER.city, DEALER.province, DEALER.postalCode].filter(Boolean).join(", ")],
-    ["Jam operasional", DEALER.openingHours], ["Telepon", DEALER.phone], ["WhatsApp", hasWhatsApp ? waDisplay : ""], ["Email", DEALER.email],
+    ["Jam operasional", DEALER.openingHours], ["Jam layanan sales", DEALER.salesHours], ["Telepon", DEALER.phone], ["WhatsApp", hasWhatsApp ? waDisplay : ""], ["Email", DEALER.email],
     ["Sales consultant", DEALER.consultantName ? `${DEALER.consultantName} (${DEALER.consultantRole})` : ""],
   ] as [string, string][]).filter(([, v]) => v);
   return (
@@ -26,6 +26,9 @@ export default function Page() {
           <a className="tk !h-10" href={contactHref("Halo, saya mau tanya XPENG")} {...(contactExternal ? { target: "_blank", rel: "noopener" } : {})}>{contactExternal ? "Chat WhatsApp →" : "Hubungi lewat formulir →"}</a>
           {DEALER.mapsUrl && <a className="tk blk !h-10" href={DEALER.mapsUrl} target="_blank" rel="noopener">Buka di Maps <b>→</b></a>}
         </div>
+        {DEALER.mapsEmbedUrl && (
+          <iframe title="Lokasi dealer di Google Maps" src={DEALER.mapsEmbedUrl} width="600" height="450" loading="lazy" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" className="h-[340px] w-full border-2 border-[#0d0d0d]" />
+        )}
         <Meta /><DealerNote />
       </Section>
       <JsonLd data={breadcrumb([{ name: "Beranda", path: "/" }, { name: "Dealer & kontak", path: "/dealer" }])} />

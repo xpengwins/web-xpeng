@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="md:col-span-2">
           <b className="text-[#f5e91a]">{DEALER.displayName} — Dealer XPENG</b>
           {hasIdentity ? <p>{DEALER.legalName}<br />{DEALER.addressLine}{DEALER.district ? `, ${DEALER.district}` : ""}, {DEALER.city}{DEALER.postalCode ? ` ${DEALER.postalCode}` : ""}</p> : null}
-          {DEALER.openingHours ? <p>Jam operasional: {DEALER.openingHours}</p> : null}
+          {DEALER.openingHours ? <p>Jam operasional: {DEALER.openingHours}{DEALER.salesHours ? ` · Layanan sales: ${DEALER.salesHours}` : ""}</p> : null}
           {(DEALER.phone || hasWhatsApp) ? <p>Telepon/WhatsApp: {DEALER.phone || waDisplay}</p> : null}
           <p className="mt-3 text-white/60">Situs ini dikelola dealer dan bukan situs resmi XPENG Indonesia. XPENG adalah merek milik pemiliknya.
             Informasi resmi: <a className="underline" href={OFFICIAL_SITE} target="_blank" rel="noopener nofollow">{OFFICIAL_SITE.replace("https://", "")}</a>.</p>
